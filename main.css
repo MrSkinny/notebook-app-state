@@ -1,0 +1,108 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header h1 {
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+main {
+    text-align: center;
+    width: 75%;
+    margin: 0 auto;
+}
+
+.note-browser {
+    /*border: rosybrown solid;*/
+    padding: 0;
+    margin: 0 auto;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 13pt;
+}
+
+.note-list, .note-detail {
+    height: 400px;
+}
+
+.note-list {
+    width: 35%;
+    float: left;
+    vertical-align: top;
+    background-color: lightgoldenrodyellow;
+}
+
+.note-item {
+    padding: 13px 0;
+}
+
+.note-item:hover, .note-item.selected {
+    background-color: darkgoldenrod;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.note-detail {
+    background-color: lightcyan;
+    text-align: left;
+    padding: 10px 25px;
+    overflow: hidden;
+}
+
+.note-detail-content header {
+    text-align: center;
+    font-weight: bold;
+    padding: 5px 35px;
+}
+
+.note-detail-content p {
+    margin-left: 15px;
+}
+
+.highlight {
+    background-color: pink;
+    color: white;
+}
+
+.notebook-selector {
+    margin: 10px 50px;
+    text-align: left;
+}
+
+select {
+   background: transparent;
+   border: 1px black solid;
+   font-size: 14px;
+   font-family: Arial;
+   font-weight: bolder;
+   height: 29px;
+   padding: 5px; /* If you add too much padding here, the options won't show in IE */
+   width: 268px;
+}
+
+.styled-select {
+   background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+   height: 29px;
+   overflow: hidden;
+   width: 240px;
+   -webkit-appearance: none;
+}
+
+.styled-select.slate {
+   background: url(http://i62.tinypic.com/2e3ybe1.jpg) no-repeat right center;
+   height: 34px;
+   width: 240px;
+}
+
+.styled-select.slate select {
+   border: 1px solid #ccc;
+   font-size: 16px;
+   height: 34px;
+   width: 268px;
+}
