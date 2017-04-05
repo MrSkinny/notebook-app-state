@@ -66,6 +66,10 @@ const appState = {
     isAddingNote: false
 };
 
+function setNotebook(state, noteId) {
+    state.selectedNotebook = Object.assign({}, state.allNotebooks.find(nb => nb.id === noteId));
+}
+
 function renderNotebookDropdown(state, el) {
     let html = '';
     html += '<select class="styled-select slate" id="notebook-dropdown">';
@@ -121,8 +125,18 @@ function renderNote(state, el){
     el.html(html);
 }
 
+function addEventListeners() {
+    $('.notebook-selector').on('change', event => {
+        const noteId = $(event.target).find('option:selected').val();
+        setNotebook(appState, noteId);
+        renderNotebookDropdown(appState, $('.notebook-selector'));
+        renderNoteList(appState, $('.note-list'));
+    });
+}
+
 $(function() {
     renderNotebookDropdown(appState, $('.notebook-selector'));
     renderNoteList(appState, $('.note-list'));
     renderNote(appState, $('.note-detail-content'));
+    addEventListeners();
 });
