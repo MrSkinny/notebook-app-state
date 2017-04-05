@@ -44,24 +44,7 @@ const appState = {
             ]
         }
     ],
-    selectedNotebook: {
-        id: '100',
-        label: 'Personal',
-        notes: [
-            {
-                id: '200',
-                title: 'Shopping'
-            },
-            {
-                id: '201',
-                title: 'Doctors no.'
-            },
-            {
-                id: '202',
-                title: 'Call with mom'
-            }
-        ]
-    },
+    selectedNotebook: null,
     selectedNote: null,
     isAddingNote: false
 };
@@ -70,11 +53,16 @@ function setNotebook(state, notebookId) {
     state.selectedNotebook = Object.assign({}, state.allNotebooks.find(nb => nb.id === notebookId));
 }
 
+function setNote(state, noteId) {
+    state.selectedNote = Object.assign({}, state.selectedNotebook.notes.find(n => n.id === noteId));
+}
+
 function renderNotebookDropdown(state, el) {
     let html = '';
     html += '<select class="styled-select slate" id="notebook-dropdown">';
+    html += '<option value="0">---</option>';
     state.allNotebooks.forEach(notebook => {
-        if (notebook.id === state.selectedNotebook.id) {
+        if (state.selectedNotebook && notebook.id === state.selectedNotebook.id) {
             html += `<option selected value="${state.selectedNotebook.id}">${state.selectedNotebook.label}</option>`;
         } else {
             html += `<option value="${notebook.id}">${notebook.label}</option>`;
@@ -87,21 +75,23 @@ function renderNotebookDropdown(state, el) {
 
 function renderNoteList(state, el){
     let html = '';
-    state.selectedNotebook.notes.forEach(note => {
-        if (state.selectedNote && state.selectedNote.id === note.id) {
-            html += `
-                <div class="note-item selected" id="${note.id}">
-                    ${note.title}
-                </div>
-            `;
-        } else {
-            html += `
-                <div class="note-item" id="${note.id}">
-                    ${note.title}
-                </div>
-            `;
-        }
-    });
+    if (state.selectedNotebook) {
+        state.selectedNotebook.notes.forEach(note => {
+            if (state.selectedNote && state.selectedNote.id === note.id) {
+                html += `
+                    <div class="note-item selected" id="${note.id}">
+                        ${note.title}
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="note-item" id="${note.id}">
+                        ${note.title}
+                    </div>
+                `;
+            }
+        });
+    }
 
     html += `
         <div class="note-item note-item-add">
@@ -128,17 +118,22 @@ function renderNote(state, el){
 function addEventListeners() {
     $('.notebook-selector').on('change', event => {
         const notebookId = $(event.target).find('option:selected').val();
+        if (notebookId === '0') return;
         setNotebook(appState, notebookId);
         renderNotebookDropdown(appState, $('.notebook-selector'));
         renderNoteList(appState, $('.note-list'));
     });
 
     $('.note-list').on('click', '.note-item', event => {
-
+        const noteId = event.target.id;
+        setNote(appState, noteId);
+        renderNoteList(appState, $('.note-list'));
+        renderNote(appState, $('.note-detail-content'));
     });
 }
 
 $(function() {
+    setNotebook(appState, appState.allNotebooks[0].id);
     renderNotebookDropdown(appState, $('.notebook-selector'));
     renderNoteList(appState, $('.note-list'));
     renderNote(appState, $('.note-detail-content'));
