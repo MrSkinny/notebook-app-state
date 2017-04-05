@@ -71,7 +71,7 @@ function renderNotebookDropdown(state, el) {
     html += '<select class="styled-select slate" id="notebook-dropdown">';
     state.allNotebooks.forEach(notebook => {
         if (notebook.id === state.selectedNotebook.id) {
-            html += `<option selected value="${notebook.id}">${notebook.label}</option>`;
+            html += `<option selected value="${state.selectedNotebook.id}">${state.selectedNotebook.label}</option>`;
         } else {
             html += `<option value="${notebook.id}">${notebook.label}</option>`;
         }
@@ -84,11 +84,19 @@ function renderNotebookDropdown(state, el) {
 function renderNoteList(state, el){
     let html = '';
     state.selectedNotebook.notes.forEach(note => {
-        html += `
-            <div class="note-item" id="${note.id}">
-                ${note.title}
-            </div>
-        `;
+        if (state.selectedNote && state.selectedNote.id === note.id) {
+            html += `
+                <div class="note-item selected" id="${note.id}">
+                    ${note.title}
+                </div>
+            `;
+        } else {
+            html += `
+                <div class="note-item" id="${note.id}">
+                    ${note.title}
+                </div>
+            `;
+        }
     });
 
     html += `
