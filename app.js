@@ -81,6 +81,25 @@ function renderNotebookDropdown(state, el) {
     el.html(html);
 }
 
+function renderNoteList(state, el){
+    let html = '';
+    state.selectedNotebook.notes.forEach(note => {
+        html += `
+            <div class="note-item" id="${note.id}">
+                ${note.title}
+            </div>
+        `;
+    });
+
+    html += `
+        <div class="note-item note-item-add">
+            + Add Note
+        </div>
+    `;
+    el.html(html);
+}
+
 $(function() {
     renderNotebookDropdown(appState, $('.notebook-selector'));
+    renderNoteList(appState, $('.note-list'));
 });
