@@ -48,6 +48,10 @@ main {
     cursor: pointer;
 }
 
+.note-item-add {
+    background-color: #eddceb;
+}
+
 .note-detail {
     background-color: lightcyan;
     text-align: left;
@@ -58,7 +62,9 @@ main {
 .note-detail-content header {
     text-align: center;
     font-weight: bold;
+    font-size: 1.2em;
     padding: 5px 35px;
+    border-bottom: 1px dashed gray;
 }
 
 .note-detail-content p {
