@@ -107,7 +107,22 @@ function renderNoteList(state, el){
     el.html(html);
 }
 
+function renderNote(state, el){
+    let html = '';
+    if (!state.selectedNote) {
+        html += '<header>Pick a Note!</header>';
+    } else {
+        html += `
+            <header>${state.selectedNote.title}</header>
+            <p>${state.selectedNote.body}</p>
+        `;
+    }
+
+    el.html(html);
+}
+
 $(function() {
     renderNotebookDropdown(appState, $('.notebook-selector'));
     renderNoteList(appState, $('.note-list'));
+    renderNote(appState, $('.note-detail-content'));
 });
