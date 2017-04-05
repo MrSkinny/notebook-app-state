@@ -66,8 +66,8 @@ const appState = {
     isAddingNote: false
 };
 
-function setNotebook(state, noteId) {
-    state.selectedNotebook = Object.assign({}, state.allNotebooks.find(nb => nb.id === noteId));
+function setNotebook(state, notebookId) {
+    state.selectedNotebook = Object.assign({}, state.allNotebooks.find(nb => nb.id === notebookId));
 }
 
 function renderNotebookDropdown(state, el) {
@@ -127,10 +127,14 @@ function renderNote(state, el){
 
 function addEventListeners() {
     $('.notebook-selector').on('change', event => {
-        const noteId = $(event.target).find('option:selected').val();
-        setNotebook(appState, noteId);
+        const notebookId = $(event.target).find('option:selected').val();
+        setNotebook(appState, notebookId);
         renderNotebookDropdown(appState, $('.notebook-selector'));
         renderNoteList(appState, $('.note-list'));
+    });
+
+    $('.note-list').on('click', '.note-item', event => {
+
     });
 }
 
