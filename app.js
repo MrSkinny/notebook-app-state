@@ -1,3 +1,5 @@
+/* global $ */
+
 const appState = {
     // typically, `allNotebooks` would be pulled from a database and not stored in state
     allNotebooks: [
@@ -54,7 +56,13 @@ function setNotebook(state, notebookId) {
 }
 
 function setNote(state, noteId) {
-    state.selectedNote = Object.assign({}, state.selectedNotebook.notes.find(n => n.id === noteId));
+    if (noteId === '-1') {
+        state.selectedNote = null;
+        state.isAddingNote = true;
+    } else {
+        state.selectedNote = Object.assign({}, state.selectedNotebook.notes.find(n => n.id === noteId));
+        state.isAddingNote = false;
+    }
 }
 
 function renderNotebookDropdown(state, el) {
@@ -94,7 +102,7 @@ function renderNoteList(state, el){
     }
 
     html += `
-        <div class="note-item note-item-add">
+        <div class="note-item note-item-add" id="-1">
             + Add Note
         </div>
     `;
@@ -103,7 +111,17 @@ function renderNoteList(state, el){
 
 function renderNote(state, el){
     let html = '';
-    if (!state.selectedNote) {
+    if (state.isAddingNote) {
+        html += `
+            <form>
+                <label>Title</title>
+                <input style="width: 100%" type="text" />
+                <label>Content</label>
+                <textarea style="width: 100%" rows="10"></textarea>
+                <input type="submit" value="Add" />
+            </form>
+        `;
+    } else if (!state.selectedNote) {
         html += '<header>Pick a Note!</header>';
     } else {
         html += `
